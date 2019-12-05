@@ -9,5 +9,8 @@ setup(
   author_email='',
   license='MIT',
   packages=['fitsbook'],
-  zip_safe=False
+  zip_safe=False,
+  install_requires=[
+    'requests'
+  ]
 )
