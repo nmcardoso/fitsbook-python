@@ -11,6 +11,8 @@ setup(
   packages=['fitsbook'],
   zip_safe=False,
   install_requires=[
-    'requests'
+    'requests',
+    'keras',
+    'numpy'
   ]
 )
