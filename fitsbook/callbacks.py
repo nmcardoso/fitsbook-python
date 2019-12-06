@@ -33,4 +33,4 @@ class TestCallback(Callback):
       'log': _logs
     }
 
-    requests.post('http://fitsbook.glitch.mr/test', json=send)
+    requests.post('http://fitsbook.glitch.me/test', json=send)
