@@ -5,7 +5,7 @@ import requests
 import numpy as np
 import json
 
-class TestCallback(Callback):
+class FitsbookCallback(Callback):
   def on_train_begin(self, logs=None):
     logs = logs or {}
     _logs = {}
