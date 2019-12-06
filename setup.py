@@ -13,6 +13,7 @@ setup(
   install_requires=[
     'requests',
     'keras',
-    'numpy'
+    'numpy',
+    'tensorflow'
   ]
 )
