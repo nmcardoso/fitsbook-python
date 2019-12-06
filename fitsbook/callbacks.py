@@ -15,7 +15,7 @@ class TestCallback(Callback):
 
     send = {
       'event': 'on_train_begin',
-      'model': self.model,
+      'model_config': self.model.get_config(),
       'log': _logs
     }
 
