@@ -22,6 +22,7 @@ class TestCallback(Callback):
   
     send = {
       'event': 'on_train_begin',
+      'model_name': self.model.name or '',
       'model_config': self.model.get_config(),
       'optimizer_name': opt_name,
       'optimizer_config': self.model.optimizer.get_config(),
