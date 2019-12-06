@@ -1,7 +1,9 @@
 from keras.callbacks import Callback
+from keras import optimizers
 
 import requests
 import numpy as np
+import json
 
 class TestCallback(Callback):
   def on_train_begin(self, logs=None):
@@ -13,9 +15,16 @@ class TestCallback(Callback):
       else:
         _logs[k] = v
 
+    if type(self.model.optimizer) is str:
+      opt_name = optimizers.get(self.model.optimizers).__class__.__name__
+    else:
+      opt_name = self.model.optimizer.__class__.__name__
+  
     send = {
       'event': 'on_train_begin',
       'model_config': self.model.get_config(),
+      'optimizer_name': opt_name,
+      'optimizer_config': self.model.optimizer.get_config(),
       'log': _logs
     }
 
