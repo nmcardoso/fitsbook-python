@@ -5,6 +5,7 @@ import numpy as np
 
 class TestCallback(Callback):
   def on_train_begin(self, logs=None):
+    logs = logs or {}
     _logs = {}
     for k, v in logs.items():
       if isinstance(v, (np.ndarray, np.generic)):
