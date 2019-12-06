@@ -30,6 +30,7 @@ class TestCallback(Callback):
     
     send = {
       'event': 'on_epoch_end',
+      'epoch': epoch,
       'log': _logs
     }
 
