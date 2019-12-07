@@ -1,4 +1,5 @@
 import numpy as np
+import os
 
 from keras import layers
 from keras import models
@@ -27,4 +28,5 @@ def main():
   model.fit(fahrenheit, celsius, epochs=10, callbacks=[FitsbookCallback()])
 
 if __name__ == '__main__':
+  os.environ['PY_ENV'] = 'DEV'
   main()

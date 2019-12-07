@@ -4,8 +4,17 @@ from keras import optimizers
 import requests
 import numpy as np
 import json
+import os
 
 class FitsbookCallback(Callback):
+  def __init__(self):
+    if os.environ.get('PY_ENV', '') == 'DEV':
+      self.api_root = 'http://localhost:3000/api'
+    else:
+      self.api_root = 'https://fitsbook.glitch.me/api'
+      
+    self.model_id = None
+
   def on_train_begin(self, logs=None):
     logs = logs or {}
     _logs = {}
@@ -19,17 +28,23 @@ class FitsbookCallback(Callback):
       opt_name = optimizers.get(self.model.optimizers).__class__.__name__
     else:
       opt_name = self.model.optimizer.__class__.__name__
-  
+
     send = {
-      'event': 'on_train_begin',
-      'model_name': self.model.name or '',
-      'model_config': self.model.get_config(),
-      'optimizer_name': opt_name,
-      'optimizer_config': self.model.optimizer.get_config(),
-      'log': _logs
+      'model': {
+        'name': self.model.name or '',
+        'config': self.model.get_config()
+      },
+      'optimizer': {
+        'name': opt_name,
+        'config': self.model.optimizer.get_config()
+      }
     }
 
-    requests.post('http://fitsbook.glitch.me/test', json=send)
+    response = requests.post(f'{self.api_root}/model', json=send)
+    print(f'{self.api_root}')
+    if (response):
+      r = response.json()
+      self.model_id = r['id'] if r['id'] else None
 
   def on_epoch_end(self, epoch, logs=None):
     _logs = {}
@@ -40,9 +55,8 @@ class FitsbookCallback(Callback):
         _logs[k] = v
     
     send = {
-      'event': 'on_epoch_end',
       'epoch': epoch,
-      'log': _logs
+      'metrics': _logs
     }
 
-    requests.post('http://fitsbook.glitch.me/test', json=send)
+    requests.post(f'{self.api_root}/history/{self.model_id}', json=send)
