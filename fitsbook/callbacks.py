@@ -44,6 +44,7 @@ class FitsbookCallback(Callback):
     if (response):
       r = response.json()
       self.model_id = r['id'] if r['id'] else None
+      print(f'[Fitsbook]: Monitoring this training in real time https://fitsbook.glitch.me/chart/{self.model_id}')
   
   def on_train_end(self, logs=None):
     response = requests.post(f'{self.api_root}/training/{self.model_id}/end')
