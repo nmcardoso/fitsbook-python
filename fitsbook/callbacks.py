@@ -41,11 +41,10 @@ class FitsbookCallback(Callback):
     }
 
     response = requests.post(f'{self.api_root}/model', json=send)
-    print(f'{self.api_root}')
     if (response):
       r = response.json()
       self.model_id = r['id'] if r['id'] else None
-
+  
   def on_train_end(self, logs=None):
     response = requests.post(f'{self.api_root}/training/{self.model_id}/end')
     if response and response.status_code == 200:
