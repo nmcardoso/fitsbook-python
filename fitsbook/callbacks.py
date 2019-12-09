@@ -46,6 +46,13 @@ class FitsbookCallback(Callback):
       r = response.json()
       self.model_id = r['id'] if r['id'] else None
 
+  def on_train_end(self, logs=None):
+    response = requests.post(f'{self.api_root}/training/{self.model_id}/end')
+    if response and response.status_code == 200:
+      print(f'[Fitsbook]: Training ended successfuly. https://fitsbook.glitch.me/chart/{self.model_id}')
+    else:
+      print('[Fitsbook]: Some error occurred while trying to finish training.')
+
   def on_epoch_end(self, epoch, logs=None):
     _logs = {}
     for k, v in logs.items():
