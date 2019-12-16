@@ -10,8 +10,10 @@ class FitsbookCallback(Callback):
   def __init__(self):
     if os.environ.get('PY_ENV', '') == 'DEV':
       self.api_root = 'http://localhost:8000/api'
+      self.site_url = 'http://localhost:3000/#'
     else:
       self.api_root = 'https://fitsbook.glitch.me/api'
+      self.site_url = 'https://nmcardoso.github.io/fitsbook/#'
       
     self.model_id = None
 
@@ -44,12 +46,12 @@ class FitsbookCallback(Callback):
     if (response):
       r = response.json()
       self.model_id = r['id'] if r['id'] else None
-      print(f'[Fitsbook]: Monitoring this training in real time https://fitsbook.glitch.me/chart/{self.model_id}')
+      print(f'[Fitsbook]: Monitoring this training in real time {self.site_url}/stats/{self.model_id}')
   
   def on_train_end(self, logs=None):
     response = requests.post(f'{self.api_root}/training/{self.model_id}/end')
     if response and response.status_code == 200:
-      print(f'[Fitsbook]: Training ended successfuly. https://fitsbook.glitch.me/chart/{self.model_id}')
+      print(f'[Fitsbook]: Training ended successfuly. {self.site_url}/stats/{self.model_id}')
     else:
       print('[Fitsbook]: Some error occurred while trying to finish training.')
 
