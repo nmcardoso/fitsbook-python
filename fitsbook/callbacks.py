@@ -9,7 +9,7 @@ import os
 class FitsbookCallback(Callback):
   def __init__(self):
     if os.environ.get('PY_ENV', '') == 'DEV':
-      self.api_root = 'http://localhost:3000/api'
+      self.api_root = 'http://localhost:8000/api'
     else:
       self.api_root = 'https://fitsbook.glitch.me/api'
       
