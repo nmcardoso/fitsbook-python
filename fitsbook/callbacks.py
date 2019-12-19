@@ -13,7 +13,7 @@ class FitsbookCallback(Callback):
       self.site_url = 'http://localhost:3000/#'
     else:
       self.api_root = 'https://fitsbook.glitch.me/api'
-      self.site_url = 'https://nmcardoso.github.io/fitsbook/#'
+      self.site_url = 'https://natan.ninja/#'
       
     self.model_id = None
 
