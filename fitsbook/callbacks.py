@@ -55,6 +55,9 @@ class FitsbookCallback(Callback):
     else:
       print('[Fitsbook]: Some error occurred while trying to finish training.')
 
+    if (self.remote_stop):
+      print('[Fitsbook]: Remotely ended training via webapp.')
+
   def on_epoch_end(self, epoch, logs=None):
     _logs = {}
     for k, v in logs.items():
@@ -69,3 +72,10 @@ class FitsbookCallback(Callback):
     }
 
     requests.post(f'{self.api_root}/history/{self.model_id}', json=send)
+
+    response = requests.get(f'{self.api_root}/training/{self.model_id}/stop')
+    if (response):
+      r = response.json()
+      if (r['stop']):
+        self.model.stop_training = True
+        self.remote_stop = True # internal flag
