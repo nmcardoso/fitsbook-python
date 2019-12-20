@@ -16,7 +16,6 @@ class FitsbookCallback(Callback):
       self.site_url = 'https://natan.ninja/#'
       
     self.model_id = None
-    self.remote_stop = False # internal flag
 
   def on_train_begin(self, logs=None):
     logs = logs or {}
@@ -56,9 +55,6 @@ class FitsbookCallback(Callback):
     else:
       print('[Fitsbook]: Some error occurred while trying to finish training.')
 
-    if (self.remote_stop):
-      print('[Fitsbook]: Remotely ended training via webapp.')
-
   def on_epoch_end(self, epoch, logs=None):
     _logs = {}
     for k, v in logs.items():
@@ -79,4 +75,3 @@ class FitsbookCallback(Callback):
       r = response.json()
       if (r['stop']):
         self.model.stop_training = True
-        self.remote_stop = True
