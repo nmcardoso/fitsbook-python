@@ -16,6 +16,7 @@ class FitsbookCallback(Callback):
       self.site_url = 'https://natan.ninja/#'
       
     self.model_id = None
+    self.remote_stop = None # internal flag
 
   def on_train_begin(self, logs=None):
     logs = logs or {}
@@ -78,4 +79,4 @@ class FitsbookCallback(Callback):
       r = response.json()
       if (r['stop']):
         self.model.stop_training = True
-        self.remote_stop = True # internal flag
+        self.remote_stop = True
